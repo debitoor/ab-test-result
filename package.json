@@ -1,6 +1,6 @@
 {
   "name": "ab-test-result",
-  "version": "1.0.0",
+  "version": "1.0.1",
   "description": "Returns the improvement rate of your AB-test and answers if it's statistically significant",
   "main": "index.js",
   "dependencies": {
