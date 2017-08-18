@@ -19,7 +19,7 @@
     "test": "istanbul cover _mocha",
     "coveralls": "cat ./coverage/lcov.info | coveralls",
     "preversion": "npm test",
-    "postversion": "git push && git push --tags",
+    "postversion": "git push && git push --tags"
   },
   "repository": {
     "type": "git",
