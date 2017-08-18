@@ -1,7 +1,7 @@
 {
   "name": "ab-test-result",
   "version": "1.0.0",
-  "description": "Returns the improvement rate of your AB-test and answers if it statistically significant",
+  "description": "Returns the improvement rate of your AB-test and answers if it's statistically significant",
   "main": "index.js",
   "dependencies": {
     "bignumber.js": "4.0.2",
@@ -12,7 +12,7 @@
     "chai": "4.1.1",
     "coveralls": "2.13.1",
     "istanbul": "0.4.5",
-    "mocha": "^3.5.0",
+    "mocha": "3.5.0",
     "mocha-eslint": "4.1.0"
   },
   "scripts": {
