@@ -131,7 +131,7 @@ describe('input validation', () => {
 	});
 
 	describe('confidense interval', () => {
-		var test = {
+		const test = {
 			controlVisits: 1,
 			controlConversions: 1,
 			challengerVisits: 1,

@@ -1,5 +1,5 @@
-var BigNumber = require('bignumber.js');
-var simpleStatistics = require('simple-statistics');
+const BigNumber = require('bignumber.js');
+const simpleStatistics = require('simple-statistics');
 
 module.exports = {
 	calcResult
@@ -9,21 +9,21 @@ function calcResult(test, confidence) {
 	validateInput(test, confidence);
 	confidence = confidence || 0.95;
 
-	var A_visits = new BigNumber(test.controlVisits);
-	var A_conversions = new BigNumber(test.controlConversions);
-	var B_visits = new BigNumber(test.challengerVisits);
-	var B_conversions = new BigNumber(test.challengerConversions);
+	const A_visits = new BigNumber(test.controlVisits);
+	const A_conversions = new BigNumber(test.controlConversions);
+	const B_visits = new BigNumber(test.challengerVisits);
+	const B_conversions = new BigNumber(test.challengerConversions);
 
-	var A_rate = calcConversionRate(A_visits, A_conversions);
-	var B_rate = calcConversionRate(B_visits, B_conversions);
-	var B_improvement = B_rate.sub(A_rate).div(A_rate);
+	const A_rate = calcConversionRate(A_visits, A_conversions);
+	const B_rate = calcConversionRate(B_visits, B_conversions);
+	const B_improvement = B_rate.sub(A_rate).div(A_rate);
 
-	var A_stdErr = calcStandardError(A_visits, A_conversions);
-	var B_stdErr = calcStandardError(B_visits, B_conversions);
+	const A_stdErr = calcStandardError(A_visits, A_conversions);
+	const B_stdErr = calcStandardError(B_visits, B_conversions);
 
-	var zScore = calcZScore(A_rate, B_rate, A_stdErr, B_stdErr);
-	var pValue = calcPValue(A_rate, B_rate, zScore);
-	var isSignificant = determineSignificance(zScore, pValue, confidence);
+	const zScore = calcZScore(A_rate, B_rate, A_stdErr, B_stdErr);
+	const pValue = calcPValue(A_rate, B_rate, zScore);
+	const isSignificant = determineSignificance(zScore, pValue, confidence);
 
 	return {
 		controlConversionRate: A_rate.toNumber(),
@@ -44,20 +44,20 @@ function calcConversionRate(visits, conversions) {
 }
 
 function calcStandardError(visits, conversions) {
-	var rate = calcConversionRate(visits, conversions);
-	var dividend = rate.mul( new BigNumber(1).sub(rate) );
+	const rate = calcConversionRate(visits, conversions);
+	const dividend = rate.mul( new BigNumber(1).sub(rate) );
 	return dividend.div(visits).sqrt();
 }
 
 function calcZScore(A_rate, B_rate, A_stdErr, B_stdErr) {
-	var rateDiff = B_rate.sub(A_rate);
-	var stdErrOfDiff = A_stdErr.pow(2).add(B_stdErr.pow(2)).sqrt();
+	const rateDiff = B_rate.sub(A_rate);
+	const stdErrOfDiff = A_stdErr.pow(2).add(B_stdErr.pow(2)).sqrt();
 	return (rateDiff).div(stdErrOfDiff);
 }
 
 function calcPValue(A_rate, B_rate, zScore) {
-	var zScoreAbs = zScore.abs().toNumber();
-	var csnp = simpleStatistics.cumulativeStdNormalProbability(zScoreAbs);
+	const zScoreAbs = zScore.abs().toNumber();
+	const csnp = simpleStatistics.cumulativeStdNormalProbability(zScoreAbs);
 	if (A_rate > B_rate) {
 		return csnp;
 	}
@@ -88,7 +88,7 @@ function validateInput(test, confidence) {
 }
 
 function validatePropertyDefined(test, propName) {
-	if (!test[propName]) {
+	if (test[propName] === null || test[propName] === undefined) {
 		throw new Error(propName + ' must be defined in test');
 	}
 }

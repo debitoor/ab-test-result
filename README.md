@@ -19,9 +19,9 @@ The result returned also contains a ```statistics``` property with calculated st
 		challengerVisits: 500, // required
 		challengerConversions: 17 // required
 	};
-	var confidense = 0.9; // optional, defaults to 0.95
+	var confidence = 0.9; // optional, defaults to 0.95
 
-	var result = abTestResult.calcResult(test, confidense);
+	var result = abTestResult.calcResult(test, confidence);
 	/*
 		result = {
 			controlConversionRate: 0.02040816326530612,
