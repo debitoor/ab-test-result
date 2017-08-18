@@ -190,7 +190,7 @@ describe('calculations', () => {
 				});
 			});
 
-			it('should return isSignificant true', () => {
+			it('should return isSignificant false', () => {
 				expect(result).to.eql({
 					controlConversionRate: 0.008606652709932543,
 					challengerConversionRate: 0.008533747090768037,
