@@ -178,6 +178,33 @@ describe('calculations', () => {
 			});
 		});
 
+		describe('when confidence is smaller than 95%', () => {
+			var result;
+
+			before(() => {
+				result = abTestResult.calcResult({
+					controlVisits: 4299,
+					controlConversions: 37,
+					challengerVisits: 3867,
+					challengerConversions: 33
+				});
+			});
+
+			it('should return isSignificant true', () => {
+				expect(result).to.eql({
+					controlConversionRate: 0.008606652709932543,
+					challengerConversionRate: 0.008533747090768037,
+					challengerImprovement: -0.008470844778059672,
+					isSignificant: false,
+					statistics: {
+						controlStandardError: 0.0014088229476923067,
+						challengerStandardError: 0.0014791825204212088,
+						zScore: -0.03569021316385061,
+						pValue: 0.516
+					}
+				});
+			});
+		});
 	});
 
 });
