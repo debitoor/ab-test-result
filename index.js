@@ -29,12 +29,12 @@ function calcResult(test, confidence) {
 		controlConversionRate: A_rate.toNumber(),
 		challengerConversionRate: B_rate.toNumber(),
 		challengerImprovement: B_improvement.toNumber(),
-		isSignificant: isSignificant,
+		isSignificant,
 		statistics: {
 			controlStandardError: A_stdErr.toNumber(),
 			challengerStandardError: B_stdErr.toNumber(),
 			zScore: zScore.toNumber(),
-			pValue: pValue
+			pValue
 		}
 	};
 }
@@ -50,9 +50,6 @@ function calcStandardError(visits, conversions) {
 }
 
 function calcZScore(A_rate, B_rate, A_stdErr, B_stdErr) {
-	if (A_rate < 0 || B_rate < 0) {
-		return new BigNumber(0);
-	}
 	var rateDiff = B_rate.sub(A_rate);
 	var stdErrOfDiff = A_stdErr.pow(2).add(B_stdErr.pow(2)).sqrt();
 	return (rateDiff).div(stdErrOfDiff);
