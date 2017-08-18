@@ -72,10 +72,10 @@ function determineSignificance(zScore, pValue, confidence) {
 }
 
 function validateInput(test, confidence) {
-	validatePropertyDefined(test, 'controlVisits');
-	validatePropertyDefined(test, 'controlConversions');
-	validatePropertyDefined(test, 'challengerVisits');
-	validatePropertyDefined(test, 'challengerConversions');
+	validateInputNumber(test, 'controlVisits');
+	validateInputNumber(test, 'controlConversions');
+	validateInputNumber(test, 'challengerVisits');
+	validateInputNumber(test, 'challengerConversions');
 	if (test.controlVisits < test.controlConversions) {
 		throw new Error('controlVisits must be greater than or equal to controlConversions');
 	}
@@ -87,8 +87,11 @@ function validateInput(test, confidence) {
 	}
 }
 
-function validatePropertyDefined(test, propName) {
-	if (test[propName] === null || test[propName] === undefined) {
-		throw new Error(propName + ' must be defined in test');
+function validateInputNumber(test, propName) {
+	if (!Number.isInteger(test[propName])) {
+		throw new Error(propName + ' must be a number');
+	}
+	if (test[propName] < 0) {
+		throw new Error(propName + ' cannot be negative');
 	}
 }

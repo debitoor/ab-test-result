@@ -19,7 +19,7 @@ describe('input validation', () => {
 			});
 
 			it('should throw error', () => {
-				expect(errorMessage).to.equal('controlVisits must be defined in test');
+				expect(errorMessage).to.equal('controlVisits must be a number');
 			});
 		});
 
@@ -39,7 +39,7 @@ describe('input validation', () => {
 			});
 
 			it('should throw error', () => {
-				expect(errorMessage).to.equal('controlConversions must be defined in test');
+				expect(errorMessage).to.equal('controlConversions must be a number');
 			});
 		});
 
@@ -59,7 +59,7 @@ describe('input validation', () => {
 			});
 
 			it('should throw error', () => {
-				expect(errorMessage).to.equal('challengerVisits must be defined in test');
+				expect(errorMessage).to.equal('challengerVisits must be a number');
 			});
 		});
 
@@ -79,7 +79,91 @@ describe('input validation', () => {
 			});
 
 			it('should throw error', () => {
-				expect(errorMessage).to.equal('challengerConversions must be defined in test');
+				expect(errorMessage).to.equal('challengerConversions must be a number');
+			});
+		});
+
+		describe('when controlConversions property is less than zero', () => {
+			var errorMessage;
+
+			before(() => {
+				try {
+					abTestResult.calcResult({
+						controlVisits: 1,
+						controlConversions: -1,
+						challengerVisits: 1,
+						challengerConversions: 1
+					});
+				} catch (e) {
+					errorMessage = e.message;
+				}
+			});
+
+			it('should throw error', () => {
+				expect(errorMessage).to.equal('controlConversions cannot be negative');
+			});
+		});
+
+		describe('when challengerVisits property is less than zero', () => {
+			var errorMessage;
+
+			before(() => {
+				try {
+					abTestResult.calcResult({
+						controlVisits: 1,
+						controlConversions: 1,
+						challengerVisits: -1,
+						challengerConversions: 1
+					});
+				} catch (e) {
+					errorMessage = e.message;
+				}
+			});
+
+			it('should throw error', () => {
+				expect(errorMessage).to.equal('challengerVisits cannot be negative');
+			});
+		});
+
+		describe('when challengerConversions property is less than zero', () => {
+			var errorMessage;
+
+			before(() => {
+				try {
+					abTestResult.calcResult({
+						controlVisits: 1,
+						controlConversions: 1,
+						challengerVisits: 1,
+						challengerConversions: -1
+					});
+				} catch (e) {
+					errorMessage = e.message;
+				}
+			});
+
+			it('should throw error', () => {
+				expect(errorMessage).to.equal('challengerConversions cannot be negative');
+			});
+		});
+
+		describe('when controlVisits property is less than zero', () => {
+			var errorMessage;
+
+			before(() => {
+				try {
+					abTestResult.calcResult({
+						controlVisits: -1,
+						controlConversions: 1,
+						challengerVisits: 1,
+						challengerConversions: 1
+					});
+				} catch (e) {
+					errorMessage = e.message;
+				}
+			});
+
+			it('should throw error', () => {
+				expect(errorMessage).to.equal('controlVisits cannot be negative');
 			});
 		});
 	});
