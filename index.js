@@ -58,7 +58,7 @@ function calcZScore(A_rate, B_rate, A_stdErr, B_stdErr) {
 function calcPValue(A_rate, B_rate, zScore) {
 	const zScoreAbs = zScore.abs().toNumber();
 	const csnp = simpleStatistics.cumulativeStdNormalProbability(zScoreAbs);
-	if (A_rate > B_rate) {
+	if (A_rate.gt(B_rate)) {
 		return csnp;
 	}
 	return 1 - csnp;
@@ -89,7 +89,7 @@ function validateInput(test, confidence) {
 
 function validateInputNumber(test, propName) {
 	if (!Number.isInteger(test[propName])) {
-		throw new Error(propName + ' must be a number');
+		throw new TypeError(propName + ' must be a number');
 	}
 	if (test[propName] < 0) {
 		throw new Error(propName + ' cannot be negative');
