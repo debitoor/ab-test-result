@@ -68,7 +68,8 @@ function determineSignificance(zScore, pValue, confidence) {
 	if (zScore.gte(new BigNumber(0))) {
 		return pValue < 1 - confidence;
 	}
-	return pValue < confidence;
+	//else use two-sided hypothesis
+	return pValue > confidence + ( (1 - confidence) / 2 );
 }
 
 function validateInput(test, confidence) {
