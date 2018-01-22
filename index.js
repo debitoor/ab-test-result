@@ -16,7 +16,13 @@ function calcResult(test, confidence) {
 
 	const A_rate = calcConversionRate(A_visits, A_conversions);
 	const B_rate = calcConversionRate(B_visits, B_conversions);
-	const B_improvement = B_rate.sub(A_rate).div(A_rate);
+
+	let B_improvement;
+	if (A_rate.isZero() || B_rate.isZero()) {
+		B_improvement = new BigNumber(0);
+	} else {
+		B_improvement = B_rate.sub(A_rate).div(A_rate);
+	}
 
 	const A_stdErr = calcStandardError(A_visits, A_conversions);
 	const B_stdErr = calcStandardError(B_visits, B_conversions);
@@ -40,10 +46,16 @@ function calcResult(test, confidence) {
 }
 
 function calcConversionRate(visits, conversions) {
+	if (conversions.isZero()) {
+		return new BigNumber(0);
+	}
 	return conversions.div(visits);
 }
 
 function calcStandardError(visits, conversions) {
+	if (visits.isZero()) {
+		return new BigNumber(0);
+	}
 	const rate = calcConversionRate(visits, conversions);
 	const dividend = rate.mul( new BigNumber(1).sub(rate) );
 	return dividend.div(visits).sqrt();
@@ -52,6 +64,9 @@ function calcStandardError(visits, conversions) {
 function calcZScore(A_rate, B_rate, A_stdErr, B_stdErr) {
 	const rateDiff = B_rate.sub(A_rate);
 	const stdErrOfDiff = A_stdErr.pow(2).add(B_stdErr.pow(2)).sqrt();
+	if (stdErrOfDiff.isZero()) {
+		return new BigNumber(0);
+	}
 	return (rateDiff).div(stdErrOfDiff);
 }
 

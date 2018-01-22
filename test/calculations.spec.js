@@ -2,6 +2,94 @@ const abTestResult = require('..');
 
 describe('calculations', () => {
 
+	describe('when some values are zero', () => {
+
+		describe('when all values are zero', () => {
+			var result;
+
+			before(() => {
+				result = abTestResult.calcResult({
+					controlVisits: 0,
+					controlConversions: 0,
+					challengerVisits: 0,
+					challengerConversions: 0
+				});
+			});
+
+			it('should return result without any NaN values', () => {
+				expect(result).to.eql({
+					controlConversionRate: 0,
+					challengerConversionRate: 0,
+					challengerImprovement: 0,
+					isSignificant: false,
+					statistics: {
+						controlStandardError: 0,
+						challengerStandardError: 0,
+						zScore: 0,
+						pValue: 0.5
+					}
+				});
+			});
+		});
+
+		describe('when controlConversions is zero', () => {
+			var result;
+
+			before(() => {
+				result = abTestResult.calcResult({
+					controlVisits: 0,
+					controlConversions: 0,
+					challengerVisits: 10,
+					challengerConversions: 5
+				});
+			});
+
+			it('should return result without any NaN values', () => {
+				expect(result).to.eql({
+					controlConversionRate: 0,
+					challengerConversionRate: 0.5,
+					challengerImprovement: 0,
+					isSignificant: true,
+					statistics: {
+						controlStandardError: 0,
+						challengerStandardError: 0.15811388300841897,
+						zScore: 3.1622776601683795,
+						pValue: 0.0010000000000000009
+					}
+				});
+			});
+		});
+
+		describe('when challengerConversions is zero', () => {
+			var result;
+
+			before(() => {
+				result = abTestResult.calcResult({
+					controlVisits: 10,
+					controlConversions: 5,
+					challengerVisits: 0,
+					challengerConversions: 0
+				});
+			});
+
+			it('should return result without any NaN values', () => {
+				expect(result).to.eql({
+					controlConversionRate: 0.5,
+					challengerConversionRate: 0,
+					challengerImprovement: 0,
+					isSignificant: true,
+					statistics: {
+						controlStandardError: 0.15811388300841897,
+						challengerStandardError: 0,
+						zScore: -3.1622776601683795,
+						pValue: 0.999
+					}
+				});
+			});
+		});
+
+	});
+
 	describe('when challenger performs better than or equal to control', () => {
 		describe('when no min confidense is provided', () => {
 
