@@ -17,7 +17,7 @@ function calcResult(test, confidence) {
 	const A_rate = calcConversionRate(A_visits, A_conversions);
 	const B_rate = calcConversionRate(B_visits, B_conversions);
 
-	let B_improvement;
+	var B_improvement;
 	if (A_rate.isZero() || B_rate.isZero()) {
 		B_improvement = new BigNumber(0);
 	} else {
